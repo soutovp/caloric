@@ -104,5 +104,5 @@ export function caloricBasal(){
                 break;
         }
     }
-    userFullData.gastoCalorico = resultado;
+    userFullData.gastoCalorico = parseFloat(resultado.toFixed(2));
 }

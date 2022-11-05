@@ -1,5 +1,6 @@
 import { caloricBasal } from "./components/caloricBasal";
 import { imcCalc } from "./components/imcCalc";
+import { macronutrientsCalc } from "./components/macronutrientsCalc";
 export interface userFullDataInterface{
   peso:number;
   altura:number;
@@ -7,6 +8,10 @@ export interface userFullDataInterface{
   genero:string;
   objective:string;
   gastoCalorico:number;
+  gProteina:number;
+  gCarboidrato:number;
+  gGordura:number;
+  atividadeValue:number
 }
 export let userFullData:userFullDataInterface = {
   peso:0,
@@ -15,6 +20,10 @@ export let userFullData:userFullDataInterface = {
   genero:'',
   objective:'',
   gastoCalorico:0,
+  gProteina:0,
+  gCarboidrato:0,
+  gGordura:0,
+  atividadeValue:0,
 }
 
 function App() {
@@ -27,18 +36,22 @@ function App() {
     const genMasculino = document.querySelector("#genMasculino") as HTMLInputElement;
     const output = document.querySelector("#resultadoIMC") as HTMLDivElement;
     const idade = document.querySelector('#idade') as HTMLInputElement;
+    const atividade = document.querySelector('#atividade') as HTMLSelectElement;
     e.preventDefault();
     userFullData.peso = parseFloat(peso.value);
     userFullData.altura = parseFloat(altura.value);
     userFullData.genero = genFeminino.checked ? genFeminino.value : genMasculino.value;
     userFullData.objective = objective.value;
     userFullData.idade = parseFloat(idade.value);
+    userFullData.atividadeValue = parseFloat(atividade.value);
     caloricBasal();
-    console.log(userFullData);
+    macronutrientsCalc();
+
     
     output.innerHTML = `${imcCalc()}<br/>`;
     output.innerHTML+= `Seu objetivo é : ${userFullData.objective} <br/><br/>`
-    output.innerHTML+= `Seu gasto calórico é de : ${userFullData.gastoCalorico.toFixed(2)}Kcal<br/>`
+    output.innerHTML+= `Seu gasto calórico é de : ${userFullData.gastoCalorico}Kcal<br/><br/>`
+    output.innerHTML+= `Você deverá consumir para seu objetivo :<br/>Proteína : ${userFullData.gProteina}g<br/>Carboidrato: ${userFullData.gCarboidrato}g<br/>Gordura: ${userFullData.gGordura}g`
 
   }
   return (
@@ -54,6 +67,15 @@ function App() {
           <option value="ganho">Ganho de Massa</option>
           <option value="perda">Perda de Peso</option>
           <option value="manter">Manter o Peso</option>
+        </select>
+        <p>Atividades</p>
+        <p><b>Leve :</b> Atividades de casa, Trabalhar sentado, caminhar 1hr</p>
+        <p><b>Moderada :</b> Incluí alguma atividade esportiva por até 1hr, Trabalhar em pé, fazer atividades de casa...</p>
+        <p><b>Intensa :</b> Atividades de casa, Trabalhos mais ativos, caminhar mais de 1hr por dia, atividades esportivas...</p>
+        <select id="atividade" className="border-solid border-2 border-black m-2">
+          <option value={1.55}>Leve</option>
+          <option value={1.84}>Moderada</option>
+          <option value={2.2}>Intensa</option>
         </select>
         <label htmlFor="idade">Qual a sua Idade?</label>
         <input type="number" placeholder="Escreve sua idade" name="idade" id="idade" className="border-solid border-2 border-black m-2 w-[20%] text-center"/>
