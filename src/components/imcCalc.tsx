@@ -4,7 +4,7 @@ interface imcCalcType {
 }
 import { userFullData } from "../App";
 export function imcCalc(){
-    const imc = userFullData.peso / (userFullData.altura * userFullData.altura);
+    const imc = parseFloat((userFullData.peso / (userFullData.altura * userFullData.altura)).toFixed(2));
     console.log(imc)
     let resultado;
     switch(true){

@@ -50,14 +50,14 @@ function App() {
     
     output.innerHTML = `${imcCalc()}<br/>`;
     output.innerHTML+= `Seu objetivo é : ${userFullData.objective} <br/><br/>`
-    output.innerHTML+= `Seu gasto calórico é de : ${userFullData.gastoCalorico}Kcal<br/><br/>`
+    output.innerHTML+= `Seu gasto calórico é de : ${(userFullData.gastoCalorico).toFixed(2)}Kcal<br/><br/>`
     output.innerHTML+= `Você deverá consumir para seu objetivo :<br/>Proteína : ${userFullData.gProteina}g<br/>Carboidrato: ${userFullData.gCarboidrato}g<br/>Gordura: ${userFullData.gGordura}g`
 
   }
   return (
     <div className="App">
       {/* @ts-ignore */}
-      <form className="flex flex-col w-[25%] p-2" id="form" onSubmit={(e)=>handleSubmit(e)}>
+      <form className="flex flex-col w-[80%] p-2 content-center m-auto" id="form" onSubmit={(e)=>handleSubmit(e)}>
         <label htmlFor="peso">Peso</label>
         <input type="number" id="peso" min={0} max={150} step="any" className="border-solid border-2 border-black m-2"/>
         <label htmlFor="altura">Altura</label>

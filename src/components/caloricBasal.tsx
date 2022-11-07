@@ -68,18 +68,16 @@ const categoria:categoriaInterface = {
 export function caloricBasal(){
     let resultado = 0;
     const idade = userFullData.idade;
-    console.log(`A idade é : ${userFullData.idade}`)
-    console.log(categoria);
     if(userFullData.genero === 'feminino'){
         switch(true){
             case idade >= 18 && idade < 31:
-                resultado = ( categoria.feminino.primeiro.equacaoUm * userFullData.peso) + categoria.feminino.primeiro.equacaoDois;
+                resultado = (( categoria.feminino.primeiro.equacaoUm * userFullData.peso) + categoria.feminino.primeiro.equacaoDois) * userFullData.atividadeValue;
                 break;
             case idade > 30 && idade <= 60:
-                resultado = ( categoria.feminino.segundo.equacaoUm * userFullData.peso) + categoria.feminino.segundo.equacaoDois;
+                resultado = (( categoria.feminino.segundo.equacaoUm * userFullData.peso) + categoria.feminino.segundo.equacaoDois) * userFullData.atividadeValue;
                 break;
             case idade > 60:
-                resultado = ( categoria.feminino.terceiro.equacaoUm * userFullData.peso) + categoria.feminino.terceiro.equacaoDois
+                resultado = (( categoria.feminino.terceiro.equacaoUm * userFullData.peso) + categoria.feminino.terceiro.equacaoDois) * userFullData.atividadeValue;
                 break;
             default:
                 console.log('Feminino não identificou variáveis.');
@@ -87,22 +85,20 @@ export function caloricBasal(){
         }
     }
     if(userFullData.genero === 'masculino'){
-        console.log(idade)
-        console.log(idade >= 18 && idade < 31);
         switch(true){
             case idade >= 18 && idade < 31:
-                resultado = ( categoria.masculino.primeiro.equacaoUm * userFullData.peso) + categoria.masculino.primeiro.equacaoDois;
+                resultado = (( categoria.masculino.primeiro.equacaoUm * userFullData.peso) + categoria.masculino.primeiro.equacaoDois) * userFullData.atividadeValue;
                 break;
             case idade > 30 && idade <= 60:
-                resultado = ( categoria.masculino.segundo.equacaoUm * userFullData.peso) + categoria.masculino.segundo.equacaoDois;
+                resultado = (( categoria.masculino.segundo.equacaoUm * userFullData.peso) + categoria.masculino.segundo.equacaoDois) * userFullData.atividadeValue;
                 break;
             case idade > 60:
-                resultado = ( categoria.masculino.terceiro.equacaoUm * userFullData.peso) + categoria.masculino.terceiro.equacaoDois;
+                resultado = (( categoria.masculino.terceiro.equacaoUm * userFullData.peso) + categoria.masculino.terceiro.equacaoDois) * userFullData.atividadeValue;
                 break;
             default:
                 console.log('Masculino não identificou variáveis.');
                 break;
         }
     }
-    userFullData.gastoCalorico = parseFloat(resultado.toFixed(2));
+    userFullData.gastoCalorico = parseFloat(resultado.toFixed(1));
 }
