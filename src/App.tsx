@@ -56,6 +56,7 @@ function App() {
   }
   return (
     <div className="App">
+      <h1 className="text-center text-xl"><b className="text-[#39A827]">CALCULADORA</b><br/> <b className="text-[#9627A8]">CALÓRICA</b></h1>
       {/* @ts-ignore */}
       <form className="flex flex-col w-[80%] p-2 content-center m-auto" id="form" onSubmit={(e)=>handleSubmit(e)}>
         <label htmlFor="peso">Peso</label>
