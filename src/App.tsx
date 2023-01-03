@@ -56,39 +56,39 @@ function App() {
   }
   return (
     <div className="App">
-      <h1 className="text-center text-xl"><b className="text-[#39A827]">CALCULADORA</b><br/> <b className="text-[#9627A8]">CALÓRICA</b></h1>
+      <h1 className="flex flex-col text-3xl font-black mt-32 items-center"><b className="text-[#39A827]">CALCULADORA</b><b className="text-[#9627A8] ml-[-73px]">CALÓRICA</b></h1>
       {/* @ts-ignore */}
-      <form className="flex flex-col w-[80%] p-2 content-center m-auto" id="form" onSubmit={(e)=>handleSubmit(e)}>
-        <label htmlFor="peso">Peso</label>
-        <input type="number" id="peso" min={0} max={150} step="any" className="border-solid border-2 border-black m-2"/>
-        <label htmlFor="altura">Altura</label>
-        <input type="number" min={0} max={3} step="any" id="altura" className="border-solid border-2 border-black m-2"/>
-        <label htmlFor="objetivo">Objetivo</label>
-        <select id="objetivo" className="border-solid border-2 border-black m-2">
+      <form className="flex flex-col w-[100%] xl:w-[50%] sm:w-[50%] p-2 content-center mt-[68px] m-auto font-[inter]" id="form" onSubmit={(e)=>handleSubmit(e)}>
+        <label htmlFor="peso" className="text-[20px]">Peso</label>
+        <input id="peso" step="any" className="border-solid border-1 border-[#FCFCFC] h-[50px] p-2 m-2 rounded-[5px] focus:outline-none text-[#9627A8] font-bold text-[20px] focus:border-[#9627A8] focus:ring-[#9627A8] focus:ring-2"/>
+        <label htmlFor="altura" className="text-[20px]">Altura</label>
+        <input id="altura" className="border-solid border-1 border-[#FCFCFC] h-[50px] p-2 m-2 rounded-[5px] focus:outline-none text-[#9627A8] font-bold text-[20px] focus:border-[#9627A8] focus:ring-[#9627A8] focus:ring-2"/>
+        <label htmlFor="objetivo" className="text-[20px]">Objetivo</label>
+        <select id="objetivo" className="border-solid border-1 border-[#FCFCFC] h-[50px] p-2 m-2 rounded-[5px] focus:outline-none text-[#9627A8] font-bold text-[20px] focus:border-[#9627A8] focus:ring-[#9627A8] focus:ring-2">
           <option value="ganho">Ganho de Massa</option>
           <option value="perda">Perda de Peso</option>
           <option value="manter">Manter o Peso</option>
         </select>
-        <p>Atividades</p>
-        <p><b>Leve :</b> Atividades de casa, Trabalhar sentado, caminhar 1hr</p>
+        <p className="text-[20px] after:content-['?'] after:ml-0.1 after:text-[#9627A8]">Atividade</p>
+        {/* <p><b>Leve :</b> Atividades de casa, Trabalhar sentado, caminhar 1hr</p>
         <p><b>Moderada :</b> Incluí alguma atividade esportiva por até 1hr, Trabalhar em pé, fazer atividades de casa...</p>
-        <p><b>Intensa :</b> Atividades de casa, Trabalhos mais ativos, caminhar mais de 1hr por dia, atividades esportivas...</p>
-        <select id="atividade" className="border-solid border-2 border-black m-2">
+        <p><b>Intensa :</b> Atividades de casa, Trabalhos mais ativos, caminhar mais de 1hr por dia, atividades esportivas...</p> */}
+        <select id="atividade" className="border-solid border-1 border-[#FCFCFC] h-[50px] p-2 m-2 rounded-[5px] focus:outline-none text-[#9627A8] font-bold text-[20px] focus:border-[#9627A8] focus:ring-[#9627A8] focus:ring-2">
           <option value={1.55}>Leve</option>
           <option value={1.84}>Moderada</option>
           <option value={2.2}>Intensa</option>
         </select>
-        <label htmlFor="idade">Qual a sua Idade?</label>
-        <input type="number" placeholder="Escreve sua idade" name="idade" id="idade" className="border-solid border-2 border-black m-2 w-[20%] text-center"/>
+        <label htmlFor="idade" className="text-[20px]">Qual a sua Idade?</label>
+        <input type="number" placeholder="" name="idade" id="idade" className="border-solid border-1 border-[#FCFCFC] h-[50px] p-2 m-2 rounded-[5px] focus:outline-none text-[#9627A8] font-bold text-[20px] w-[20%] text-center focus:border-[#9627A8] focus:ring-[#9627A8] focus:ring-2"/>
         <div className="m-2 flex flex-row">
+          <input className="m-2 focus:outline-none" type="radio" id="genMasculino" name="gen" value={'masculino'}/>
           <label htmlFor="genMasculino">Masculino</label>
-          <input className="m-2" type="radio" id="genMasculino" name="gen" value={'masculino'}/>
         </div>
         <div className="m-2 flex flex-row">
+          <input className="m-2 focus:outline-none text-[#9627A8]" type="radio" id="genFeminino" name="gen" value={'feminino'}/>
           <label htmlFor="genMasculino">Feminino</label>
-          <input className="m-2" type="radio" id="genFeminino" name="gen" value={'feminino'}/>
         </div>
-        <button id="calcularImc" className="text-white bg-black m-2">Calcular</button>
+        <button id="calcularImc" className="h-[50px] p-2 m-2 rounded-[5px] focus:outline-none text-white font-bold text-[20px] bg-[#39A827]">Calcular</button>
       </form>
       <hr />
       <div id="resultadoIMC" className="m-2"></div>
