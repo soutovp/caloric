@@ -4,29 +4,31 @@ import { imcCalc } from "../components/imcCalc";
 import { macronutrientsCalc } from "../components/macronutrientsCalc";
 import Resultado from "./Resultado";
 export interface userFullDataInterface{
-  peso:number;
-  altura:number;
-  idade:number;
-  genero:string;
-  objective:string;
-  gastoCalorico:number;
-  gProteina:number;
-  gCarboidrato:number;
-  gGordura:number;
-  atividadeValue:number
-}
-export let userFullData:userFullDataInterface = {
-  peso:0,
-  altura:0,
-  idade:0,
-  genero:'',
-  objective:'',
-  gastoCalorico:0,
-  gProteina:0,
-  gCarboidrato:0,
-  gGordura:0,
-  atividadeValue:0,
-}
+     peso:number;
+     altura:number;
+     idade:number;
+     genero:string;
+     objective:string;
+     gastoCalorico:number;
+     gProteina:number;
+     gCarboidrato:number;
+     gGordura:number;
+     atividadeValue:number
+   }
+   export let userFullData:userFullDataInterface = {
+     peso:0,
+     altura:0,
+     idade:0,
+     genero:'',
+     objective:'',
+     gastoCalorico:0,
+     gProteina:0,
+     gCarboidrato:0,
+     gGordura:0,
+     atividadeValue:0,
+   }
+// import { resultadoUserFullData } from "./Resultado";
+
 export default function Index(){
      function showHideForm(){
           const form = document.querySelector("#form") as HTMLFormElement;
@@ -63,7 +65,7 @@ export default function Index(){
           output.innerHTML+= `Você deverá consumir para seu objetivo :<br/>Proteína : ${userFullData.gProteina}g<br/>Carboidrato: ${userFullData.gCarboidrato}g<br/>Gordura: ${userFullData.gGordura}g`
           output.innerHTML+= `<input type="button" value="voltar" onClick="showHideForm()/>"`
 
-          
+          console.log(userFullData);
      }
      return(
           <div className="App">
@@ -99,8 +101,11 @@ export default function Index(){
                     <input className="m-2 focus:outline-none focus:outline-2 focus:outline-[#9627A8] accent-[#9627A8]" type="radio" id="genFeminino" name="gen" value={'feminino'}/>
                     <label htmlFor="genMasculino">Feminino</label>
                </div>
-               <Link to="/resultado" className="">
-                    <button id="calcularImc" className="w-[100%] h-[50px] p-2 rounded-[5px] focus:outline-none focus:outline-2 focus:outline-[#9627A8] text-white font-bold text-[20px] bg-[#39A827]">Calcular</button>
+               <Link id="calcularImc" to={{
+                    pathname:"/resultado",
+                    
+               }} className="">
+                    <button className="w-[100%] h-[50px] p-2 rounded-[5px] focus:outline-none focus:outline-2 focus:outline-[#9627A8] text-white font-bold text-[20px] bg-[#39A827]">Calcular</button>
                </Link>
                </form>
                <hr />

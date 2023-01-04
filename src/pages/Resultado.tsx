@@ -1,5 +1,7 @@
 import { Link, Route } from "react-router-dom";
+
 export default function Resultado(){
+     // console.log(userFullData);
      return(
           <>
                <Link to="/">Voltar</Link>
