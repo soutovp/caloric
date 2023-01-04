@@ -1,8 +1,8 @@
+import { userFullData } from "../pages/Index";
 interface imcCalcType {
     peso: number;
     altura: number;
 }
-import { userFullData } from "../App";
 export function imcCalc(){
     const imc = parseFloat((userFullData.peso / (userFullData.altura * userFullData.altura)).toFixed(2));
     console.log(imc)

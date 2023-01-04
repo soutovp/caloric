@@ -1,5 +1,4 @@
-import { userFullData } from "../App";
-
+import { userFullData } from "../pages/Index";
 export interface importantDataInterface{
     gToCalProteina:number;
     gToCalCarboidrato:number;

@@ -1,4 +1,5 @@
-import { userFullData } from "../App";
+import { userFullData } from "../pages/Index";
+
 interface categoriaInterface{
     feminino:{
         primeiro:{
