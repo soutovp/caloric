@@ -30,15 +30,9 @@ export interface userFullDataInterface{
 // import { resultadoUserFullData } from "./Resultado";
 
 export default function Index(){
-     function showHideForm(){
-          const form = document.querySelector("#form") as HTMLFormElement;
-          if(form.style.display){
-               form.style.display = "none";
-          }else{
-               form.style.display = "block"
-          }
-     }
-     function handleSubmit(e:HTMLFormElement){
+     function handleSubmit(){
+          
+          // e.preventDefault();
           const peso = document.querySelector("#peso") as HTMLInputElement;
           const altura = document.querySelector("#altura") as HTMLInputElement;
           const objective = document.querySelector("#objetivo") as HTMLSelectElement;
@@ -47,7 +41,6 @@ export default function Index(){
           const output = document.querySelector("#resultadoIMC") as HTMLDivElement;
           const idade = document.querySelector('#idade') as HTMLInputElement;
           const atividade = document.querySelector('#atividade') as HTMLSelectElement;
-          e.preventDefault();
           userFullData.peso = parseFloat(peso.value);
           userFullData.altura = parseFloat(altura.value.replace(",","."));
           userFullData.genero = genFeminino.checked ? genFeminino.value : genMasculino.value;
@@ -56,7 +49,6 @@ export default function Index(){
           userFullData.atividadeValue = parseFloat(atividade.value);
           caloricBasal();
           macronutrientsCalc();
-          
           // showHideForm();
           
           output.innerHTML = `${imcCalc()}<br/>`;
@@ -78,9 +70,9 @@ export default function Index(){
                <input id="altura" className="border-solid border-1 border-[#FCFCFC] h-[50px] p-2 m-2 rounded-[5px] focus:outline-none text-[#9627A8] font-bold text-[20px] focus:border-[#9627A8] focus:ring-[#9627A8] focus:ring-2"/>
                <label htmlFor="objetivo" className="text-[20px]">Objetivo</label>
                <select id="objetivo" className="border-solid border-1 border-[#FCFCFC] h-[50px] p-2 m-2 rounded-[5px] focus:outline-none text-[#9627A8] font-bold text-[20px] focus:border-[#9627A8] focus:ring-[#9627A8] focus:ring-2">
-                    <option value="ganho">Ganho de Massa</option>
-                    <option value="perda">Perda de Peso</option>
-                    <option value="manter">Manter o Peso</option>
+                    <option value="Ganho">Ganho de Massa</option>
+                    <option value="Perda">Perda de Peso</option>
+                    <option value="Manter">Manter o Peso</option>
                </select>
                <p className="text-[20px] after:content-['?'] after:[5px] after:text-[#9627A8]">Atividade</p>
                {/* <p><b>Leve :</b> Atividades de casa, Trabalhar sentado, caminhar 1hr</p>
@@ -104,7 +96,7 @@ export default function Index(){
                <Link id="calcularImc" to={{
                     pathname:"/resultado",
                     
-               }} className="">
+               }} className="" onClick={handleSubmit}>
                     <button className="w-[100%] h-[50px] p-2 rounded-[5px] focus:outline-none focus:outline-2 focus:outline-[#9627A8] text-white font-bold text-[20px] bg-[#39A827]">Calcular</button>
                </Link>
                </form>
