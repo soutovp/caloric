@@ -5,7 +5,7 @@ interface imcCalcType {
 }
 export function imcCalc(){
     const imc = parseFloat((userFullData.peso / (userFullData.altura * userFullData.altura)).toFixed(2));
-    console.log(imc)
+    console.log(imc);
     let resultado;
     switch(true){
         case imc < 18.5:

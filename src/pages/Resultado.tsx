@@ -3,15 +3,12 @@ import { imcCalc } from "../components/imcCalc";
 import { userFullData } from "./Index";
 
 export default function Resultado(){
-     console.log("This is :"+userFullData.altura);
-     // console.log(userFullData);
      return(
           <>
-               <Link to="/">Voltar</Link>
 
                <h1 className="flex flex-col text-3xl font-black mt-32 items-center"><b className="text-[#39A827]">CALCULADORA</b><b className="text-[#9627A8] ml-[-73px]">CALÓRICA</b></h1>
 
-               <form className="flex flex-col w-[100%] xl:w-[50%] sm:w-[65%] p-2 content-center mt-[68px] m-auto font-[inter]">
+               <form className="flex flex-col w-[100%] xl:w-[25%] sm:w-[65%] p-2 content-center mt-[68px] m-auto font-[inter]">
                     <h2 className="text-center text-[#9627A8] text-[20px]">Seu Objetivo é: <b className="text-[#39A827]">{userFullData.objective}</b></h2>
 
                     <div className="text-center">{imcCalc()}</div>
@@ -20,6 +17,24 @@ export default function Resultado(){
                     <div className="mt-[5px] p-[10px] bg-white text-center text-[32px] rounded-[5px] shadow-md">
                          <p className="text-[#39A827] font-[1000]">{userFullData.gastoCalorico}</p>
                     </div>
+
+                    <div className="m-auto">
+                         <h3 className="text-[#9627A8] text-[25px] font-[1000] mt-[36px] text-center">Para alcançar sua meta</h3>
+                         <p className="text-[#9627A8]">Deverá consumir:</p>
+                    </div>
+                    <h3 className="text-[#9627A8] text-[25px] font-[1000] mt-[10px]">Proteinas -</h3>
+                    <div className="mt-[5px] p-[10px] bg-white text-center text-[32px] rounded-[5px] shadow-md">
+                         <p className="text-[#39A827] font-[1000]">{userFullData.gProteina}</p>
+                    </div>
+                    <h3 className="text-[#9627A8] text-[25px] font-[1000] mt-[36px]">Carboidratos -</h3>
+                    <div className="mt-[5px] p-[10px] bg-white text-center text-[32px] rounded-[5px] shadow-md">
+                         <p className="text-[#39A827] font-[1000]">{userFullData.gCarboidrato}</p>
+                    </div>
+                    <h3 className="text-[#9627A8] text-[25px] font-[1000] mt-[36px]">Gorduras -</h3>
+                    <div className="mt-[5px] p-[10px] bg-white text-center text-[32px] rounded-[5px] shadow-md">
+                         <p className="text-[#39A827] font-[1000]">{userFullData.gGordura}</p>
+                    </div>
+                    <Link to="/" className="mt-[64px] text-center w-[100%] h-[50px] p-2 rounded-[5px] focus:outline-none focus:outline-2 focus:outline-[#9627A8] text-white font-bold text-[20px] bg-[#39A827]">Voltar</Link>
                </form>
           </>
      );

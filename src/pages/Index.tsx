@@ -63,7 +63,7 @@ export default function Index(){
           <div className="App">
                <h1 className="flex flex-col text-3xl font-black mt-32 items-center"><b className="text-[#39A827]">CALCULADORA</b><b className="text-[#9627A8] ml-[-73px]">CALÓRICA</b></h1>
                {/* @ts-ignore */}
-               <form className="flex flex-col w-[100%] xl:w-[50%] sm:w-[65%] p-2 content-center mt-[68px] m-auto font-[inter]" id="form" onSubmit={(e)=>handleSubmit(e)}>
+               <form className="flex flex-col w-[100%] xl:w-[25%] sm:w-[65%] p-2 content-center mt-[68px] m-auto font-[inter]" id="form" onSubmit={(e)=>handleSubmit(e)}>
                <label htmlFor="peso" className="text-[20px]">Peso</label>
                <input id="peso" step="any" className="border-solid border-1 border-[#FCFCFC] h-[50px] p-2 m-2 rounded-[5px] focus:outline-none text-[#9627A8] font-bold text-[20px] focus:border-[#9627A8] focus:ring-[#9627A8] focus:ring-2"/>
                <label htmlFor="altura" className="text-[20px]">Altura</label>

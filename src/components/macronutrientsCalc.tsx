@@ -10,8 +10,8 @@ export interface importantDataInterface{
     gToCalGordura:9,
   }
   export function macronutrientsCalc(){
-    console.log(userFullData.gastoCalorico);
-    if(userFullData.objective === "ganho"){
+    console.log("O gasto calórico é: "+userFullData.gastoCalorico);
+    if(userFullData.objective === "Ganho"){
         userFullData.gastoCalorico *= 1.2
         const proteina = 0.4;
         const carboidrato = 0.4;
@@ -22,7 +22,7 @@ export interface importantDataInterface{
         userFullData.gGordura = parseFloat((resultado[2] / importantData.gToCalGordura).toFixed(2));
         console.log(resultado);
     }
-    if(userFullData.objective === "perda"){
+    if(userFullData.objective === "Perda"){
         userFullData.gastoCalorico *= 0.8
         const proteina = 0.4;
         const carboidrato = 0.4;
@@ -33,7 +33,7 @@ export interface importantDataInterface{
         userFullData.gGordura = parseFloat((resultado[2] / importantData.gToCalGordura).toFixed(2));
         console.log(resultado);
     }
-    if(userFullData.objective === "manter"){
+    if(userFullData.objective === "Manter"){
         userFullData.gastoCalorico *= 1.0
         const proteina = 0.4;
         const carboidrato = 0.4;
