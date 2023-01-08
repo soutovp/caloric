@@ -8,7 +8,7 @@ export default function Resultado(){
 
                <h1 className="flex flex-col text-3xl font-black mt-32 items-center"><b className="text-[#39A827]">CALCULADORA</b><b className="text-[#9627A8] ml-[-73px]">CALÓRICA</b></h1>
 
-               <form className="flex flex-col w-[100%] xl:w-[25%] sm:w-[65%] p-2 content-center mt-[68px] m-auto font-[inter]">
+               <form className="flex flex-col w-[90%] xl:w-[25%] sm:w-[65%] p-2 content-center mt-[68px] m-auto font-[inter]">
                     <h2 className="text-center text-[#9627A8] text-[20px]">Seu Objetivo é: <b className="text-[#39A827]">{userFullData.objective}</b></h2>
 
                     <div className="text-center">{imcCalc()}</div>
@@ -34,7 +34,7 @@ export default function Resultado(){
                     <div className="mt-[5px] p-[10px] bg-white text-center text-[32px] rounded-[5px] shadow-md">
                          <p className="text-[#39A827] font-[1000]">{userFullData.gGordura}g</p>
                     </div>
-                    <Link to="/" className="mt-[64px] text-center w-[100%] h-[50px] p-2 rounded-[5px] focus:outline-none focus:outline-2 focus:outline-[#9627A8] text-white font-bold text-[20px] bg-[#39A827]">Voltar</Link>
+                    <Link to="/" className="mt-[64px] mb-[64px] text-center w-[100%] h-[50px] p-2 rounded-[5px] focus:outline-none focus:outline-2 focus:outline-[#9627A8] text-white font-bold text-[20px] bg-[#39A827]">Voltar</Link>
                </form>
           </>
      );
