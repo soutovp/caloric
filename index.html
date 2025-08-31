@@ -3,7 +3,17 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Calculadora de Saúde e Bem-Estar</title>
+		<title>Caloric: Calculadora de Calorias e Macronutrientes</title>
+		<meta name="description" content="Calcule sua meta diária de calorias e macronutrientes (proteínas, carboidratos, gorduras) com base nos seus objetivos de forma gratuita e precisa com o Caloric." />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://caloric.com.br/" />
+		<meta property="og:title" content="Caloric: Calculadora de Calorias e Macronutrientes" />
+		<meta property="og:description" content="Calcule suas metas diárias de calorias e macros de forma gratuita e precisa." />
+		<!-- <meta property="og:image" content=""> -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content="https://caloric.com.br/" />
+		<meta property="twitter:title" content="Caloric: Calculadora de Calorias e Macronutrientes" />
+		<meta property="twitter:description" content="Calcule suas metas diárias de calorias e macros de forma gratuita e precisa." />
 		<link rel="stylesheet" href="css/style.css" />
 		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8887540917989782" crossorigin="anonymous"></script>
 
@@ -32,6 +42,19 @@
 					<div class="form-group">
 						<label for="height">Altura (cm)</label>
 						<input type="number" id="height" placeholder="Ex: 180" required />
+					</div>
+					<div class="form-group">
+						<label for="age">Idade</label>
+						<input type="number" id="age" placeholder="Ex: 30" min="15" max="99" required />
+					</div>
+
+					<div class="form-group">
+						<label for="gender">Sexo Biológico</label>
+						<select id="gender" required>
+							<option value="" disabled selected>Selecione uma opção</option>
+							<option value="male">Masculino</option>
+							<option value="female">Feminino</option>
+						</select>
 					</div>
 					<div class="form-group">
 						<label for="objective">Qual o seu objetivo?</label>
