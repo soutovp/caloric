@@ -1,0 +1,19 @@
+:root {
+	--cor-primaria: #0d47a1; /* Um azul profundo para confiança e serenidade */
+	--cor-destaque: #ff7043; /* Um laranja coral para ação e motivação */
+	--cor-sucesso: #4caf50; /* Um verde para feedback positivo */
+	--cor-fundo: #f7f9fc; /* Um cinza muito claro para um fundo limpo */
+	--cor-texto-principal: #263238; /* Um cinza-chumbo para leitura confortável */
+	--cor-texto-secundario: #546e7a; /* Um cinza médio para textos de apoio */
+	--cor-borda: #cfd8dc; /* Uma cor suave para as bordas dos inputs */
+}
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: var(--cor-fundo);
+	color: var(--cor-texto-principal);
+	margin: 0;
+	padding: 20px;
+	place-items: center;
+	min-height: 100vh;
+	box-sizing: border-box;
+}

@@ -50,6 +50,15 @@ h1 {
 	margin-top: 0;
 }
 
+/* Adicionar no seu style.css */
+.logo {
+	font-size: 2rem; /* 32px */
+	font-weight: 600;
+	color: var(--cor-primaria);
+	text-align: center;
+	margin-bottom: 0.5rem;
+}
+
 p {
 	color: var(--cor-texto-secundario);
 	margin-bottom: 2rem;
