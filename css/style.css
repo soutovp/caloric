@@ -1,0 +1,209 @@
+/* Paleta de Cores - App de Saúde */
+:root {
+	--cor-primaria: #0d47a1; /* Um azul profundo para confiança e serenidade */
+	--cor-destaque: #ff7043; /* Um laranja coral para ação e motivação */
+	--cor-sucesso: #4caf50; /* Um verde para feedback positivo */
+
+	--cor-fundo: #f7f9fc; /* Um cinza muito claro para um fundo limpo */
+	--cor-texto-principal: #263238; /* Um cinza-chumbo para leitura confortável */
+	--cor-texto-secundario: #546e7a; /* Um cinza médio para textos de apoio */
+}
+/* Importação de uma fonte limpa e profissional do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Paleta de Cores - App de Saúde */
+:root {
+	--cor-primaria: #0d47a1; /* Um azul profundo para confiança e serenidade */
+	--cor-destaque: #ff7043; /* Um laranja coral para ação e motivação */
+	--cor-sucesso: #4caf50; /* Um verde para feedback positivo */
+	--cor-fundo: #f7f9fc; /* Um cinza muito claro para um fundo limpo */
+	--cor-texto-principal: #263238; /* Um cinza-chumbo para leitura confortável */
+	--cor-texto-secundario: #546e7a; /* Um cinza médio para textos de apoio */
+	--cor-borda: #cfd8dc; /* Uma cor suave para as bordas dos inputs */
+}
+
+/* 1. Estilos de Base (A Fundação) */
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: var(--cor-fundo);
+	color: var(--cor-texto-principal);
+	margin: 0;
+	padding: 20px;
+	display: grid;
+	place-items: center;
+	min-height: 100vh;
+	box-sizing: border-box;
+}
+
+/* 2. Layout Principal (O Cartão Central) */
+main {
+	background-color: white;
+	padding: 2rem;
+	border-radius: 12px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+	width: 100%;
+	max-width: 500px;
+}
+
+h1 {
+	color: var(--cor-primaria);
+	margin-top: 0;
+}
+
+p {
+	color: var(--cor-texto-secundario);
+	margin-bottom: 2rem;
+}
+
+/* 3. Estilos do Formulário */
+.form-group {
+	margin-bottom: 1.5rem;
+}
+
+label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-weight: 600;
+}
+
+input,
+select {
+	width: 100%;
+	padding: 0.8rem;
+	border: 1px solid var(--cor-borda);
+	border-radius: 8px;
+	font-size: 1rem;
+	font-family: 'Poppins', sans-serif;
+	box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+	outline: none;
+	border-color: var(--cor-primaria);
+	box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
+}
+
+/* 4. O Botão de Ação (A Chamada para a Motivação) */
+button {
+	width: 100%;
+	padding: 1rem;
+	background-color: var(--cor-destaque);
+	color: white;
+	border: none;
+	border-radius: 8px;
+	font-size: 1.1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+button:hover {
+	transform: translateY(-2px);
+	background-color: #f85f2f; /* Um tom ligeiramente mais escuro de laranja */
+}
+
+/* Adicionar no final do style.css */
+
+.hidden {
+	display: none !important;
+}
+
+#results-container h2 {
+	color: var(--cor-primaria);
+}
+
+.result-item {
+	background-color: var(--cor-fundo);
+	padding: 1rem;
+	border-radius: 8px;
+	margin-bottom: 1rem;
+	text-align: center;
+}
+
+.result-item span {
+	color: var(--cor-texto-secundario);
+	font-size: 0.9rem;
+}
+
+.result-item p {
+	margin: 0.5rem 0;
+	color: var(--cor-texto-principal);
+	font-size: 2.5rem;
+	font-weight: 600;
+}
+
+.main-result p {
+	color: var(--cor-destaque); /* Dando destaque à meta de calorias */
+}
+
+.macros {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.macro-item {
+	background-color: var(--cor-fundo);
+	padding: 1rem;
+	border-radius: 8px;
+	flex-grow: 1;
+	text-align: center;
+}
+
+.macro-item p {
+	font-size: 1.5rem;
+	margin: 0.5rem 0;
+}
+
+.bmi-card small {
+	display: block;
+	margin-top: 1rem;
+	color: var(--cor-texto-secundario);
+}
+/* Estilos para a classificação do IMC */
+#bmi-classification p {
+	font-size: 1.1rem;
+	font-weight: 600;
+	margin: 0;
+}
+
+/* Classes de status para dar feedback visual */
+.status-underweight {
+	background-color: #fff3e0;
+	color: #e65100;
+} /* Laranja claro */
+.status-ideal {
+	background-color: #e8f5e9;
+	color: #2e7d32;
+} /* Verde claro */
+.status-overweight {
+	background-color: #fff3e0;
+	color: #e65100;
+} /* Laranja claro */
+.status-obesity {
+	background-color: #ffebee;
+	color: #c62828;
+} /* Vermelho claro */
+
+/* Estilo para o botão de retorno (estilo secundário) */
+#return-button {
+	width: 100%;
+	padding: 1rem;
+	margin-top: 1rem;
+	background-color: transparent;
+	color: var(--cor-primaria);
+	border: 2px solid var(--cor-primaria);
+	border-radius: 8px;
+	font-size: 1.1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+#return-button:hover {
+	background-color: var(--cor-primaria);
+	color: white;
+	transform: translateY(-2px);
+}
