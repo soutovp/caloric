@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- O NOSSO PRIMEIRO MODELO DE DADOS ---
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  password  String
+  weight      Int?
+  height    Int?
+  birth     DateTime?
+  gender    String?
+  objective String?
+  activity  String?
+
+  calculations Calculation[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Calculation{
+  id            String @id @default(uuid())
+  createdAt     DateTime @default(now())
+
+  //Entradas do cálculo
+  weight        Int
+  height        Int
+  age           Int
+  gender        String
+  activityLevel String
+  objective     String
+
+  //Resultado do cálculo
+  bmi           Float
+  finalCalories Float
+  proteinGrams  Float
+  carbsGrams    Float
+  fatGrams      Float
+
+
+  //A "magia" da relação
+  userId        String // Chave estrangeira
+  user          User @relation(fields: [userId], references:[id])
+}
