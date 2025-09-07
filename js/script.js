@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	const openLoginBtn = document.getElementById('open-login-modal-btn');
 	const closeLoginBtn = document.getElementById('close-login-modal-btn');
 	const loginForm = document.getElementById('login-form');
+	// --- Seletores de Elementos ---
+	const navAnonymous = document.getElementById('nav-anonymous');
+	const navLoggedIn = document.getElementById('nav-logged-in');
+	const userGreeting = document.getElementById('user-greeting');
+	const historySection = document.getElementById('history-section');
+	const historyList = document.getElementById('history-list');
+	const logoutBtn = document.getElementById('logout-btn');
 
 	// Lógica para abrir e fechar o modal
 	openRegisterBtn.addEventListener('click', () => registerModal.showModal());
@@ -112,6 +119,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		calculatorContainer.classList.add('hidden');
 		resultsContainer.classList.remove('hidden');
+
+		const token = localStorage.getItem('authToken');
+
+		if (token) {
+			//Se estiver logado, reunimos os dados e chamamos a função para salvar
+			const calculationData = {
+				weight,
+				height,
+				age,
+				gender,
+				activityLevel,
+				objective,
+				bmi,
+				finalCalories,
+				proteinGrams,
+				carbsGrams,
+				fatGrams,
+			};
+			saveCalculationToServer(calculationData, token);
+		}
+		//Se não houver token, não fazemos nada. O utilizador anônimo apenas vê o resultado.
 	});
 
 	// Lógica para submeter o formulário de registo
@@ -176,12 +204,155 @@ document.addEventListener('DOMContentLoaded', function () {
 			alert('Login bem-sucedido!');
 			loginModal.close();
 
-			// Futuramente: Atualizar a UI para mostrar que o utilizador está logado
-			// Ex: esconder os botões de "Login/Registo" e mostrar "Meu Histórico"
+			checkLoginStatus();
 		} catch (error) {
 			alert(error.message);
 		}
 	});
+
+	// --- FUNÇÕES PRINCIPAIS ---
+
+	/**
+	 * Função para fazer logout do utilizador
+	 */
+	const logout = () => {
+		localStorage.removeItem('authToken');
+		updateUIForLoggedOutUser();
+		alert('Sessão terminada.');
+	};
+
+	/**
+	 * Atualiza a UI para o estado "Logado"
+	 */
+	const updateUIForLoggedInUser = (userData) => {
+		navAnonymous.classList.add('hidden');
+		navLoggedIn.classList.remove('hidden');
+		historySection.classList.remove('hidden');
+		userGreeting.classList.remove('hidden');
+		userGreeting.textContent = `Olá, ${userData.name || 'Utilizador'}!`;
+		fetchHistory();
+	};
+
+	/**
+	 * Atualiza a UI para o estado "Deslogado"
+	 */
+	const updateUIForLoggedOutUser = () => {
+		navAnonymous.classList.remove('hidden');
+		navLoggedIn.classList.add('hidden');
+		historySection.classList.add('hidden');
+		userGreeting.classList.add('hidden');
+	};
+
+	/**
+	 * Busca e exibe o histórico de cálculos do utilizador
+	 */
+	const fetchHistory = async () => {
+		const token = localStorage.getItem('authToken');
+		if (!token) return;
+
+		try {
+			const response = await fetch(`${API_URL}/api/calculations`, {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+
+			if (response.status === 401 || response.status === 403) {
+				// Token inválido ou expirado! Fazemos o logout.
+				logout();
+				throw new Error('Sessão inválida ou expirada.');
+			}
+
+			const calculations = await response.json();
+
+			// Renderiza o histórico na página
+			historyList.innerHTML = ''; // Limpa a lista antes de a preencher
+			if (calculations.length === 0) {
+				historyList.innerHTML = '<p>Você ainda não tem cálculos guardados.</p>';
+			} else {
+				calculations.forEach((calc) => {
+					const calcElement = document.createElement('div');
+					calcElement.className = 'history-item';
+					calcElement.innerHTML = `
+                        <strong>Data:</strong> ${new Date(calc.createdAt).toLocaleDateString()}<br>
+                        <strong>Meta:</strong> ${calc.finalCalories.toFixed(0)} kcal | 
+                        <strong>P:</strong> ${calc.proteinGrams.toFixed(0)}g, 
+                        <strong>C:</strong> ${calc.carbsGrams.toFixed(0)}g, 
+                        <strong>G:</strong> ${calc.fatGrams.toFixed(0)}g
+                    `;
+					historyList.appendChild(calcElement);
+				});
+			}
+		} catch (error) {
+			console.error('Erro ao buscar histórico:', error);
+			historyList.innerHTML = '<p>Não foi possível carregar o seu histórico.</p>';
+		}
+	};
+
+	/**
+	 * Verifica o estado de login quando a página carrega
+	 */
+	const checkLoginStatus = async () => {
+		const token = localStorage.getItem('authToken');
+		if (!token) {
+			updateUIForLoggedOutUser();
+			return;
+		}
+
+		// Se existe um token, vamos validá-lo pedindo os dados do utilizador
+		try {
+			const response = await fetch(`${API_URL}/api/me`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+
+			if (!response.ok) {
+				// Se o token for inválido (expirado, etc.), fazemos o logout
+				logout();
+				return;
+			}
+
+			const userData = await response.json();
+			updateUIForLoggedInUser(userData);
+		} catch (error) {
+			console.error('Erro ao verificar o token:', error);
+			updateUIForLoggedOutUser();
+		}
+	};
+
+	/**
+	 * Envia os dados de um cálculo para a API para serem salvos
+	 * @param {object} calculationData - O objeto com todos os dados do cálculo
+	 * @param {string} token - O token de autenticação do utilizador
+	 */
+	const saveCalculationToServer = async (calculationData, token) => {
+		try {
+			const response = await fetch(`${API_URL}/api/calculations`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(calculationData),
+			});
+
+			if (!response.ok) {
+				throw new Error('Falha ao salvar o cálculo.');
+			}
+
+			console.log('Cálculo salvo com sucesso!');
+			fetchHistory(); // <-- A MÁGICA: Atualiza a lista de histórico em tempo real!
+		} catch (error) {
+			console.error('Erro ao salvar cálculo:', error);
+			alert('Não foi possível salvar o seu cálculo no histórico.');
+		}
+	};
+
+	// --- EVENTOS GLOBAIS ---
+	logoutBtn.addEventListener('click', logout);
+
+	// --- PONTO DE PARTIDA ---
+	checkLoginStatus(); // Verifica o estado de login assim que a página está pronta
 
 	returnButton.addEventListener('click', function () {
 		resultsContainer.classList.add('hidden');

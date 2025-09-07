@@ -33,13 +33,17 @@
 		<main>
 			<header>
 				<div class="logo">Caloric</div>
-				<nav>
+				<div id="user-greeting" class="hidden"></div>
+				<nav id="nav-anonymous">
 					<button id="open-register-modal-btn">Registar</button>
 					<button id="open-login-modal-btn">Login</button>
 				</nav>
+				<nav id="nav-logged-in" class="hidden">
+					<button id="logout-btn">Sair</button>
+				</nav>
 			</header>
 			<div id="calculator-container">
-				<div class="logo">Caloric</div>
+				<!-- <div class="logo">Caloric</div> -->
 				<p>Preencha os seus dados para descobrirmos as suas metas.</p>
 				<form id="calculator-form">
 					<div class="form-group">
@@ -121,6 +125,14 @@
 
 				<button id="return-button" type="button">Calcular Novamente</button>
 			</div>
+
+			<section id="history-section" class="hidden">
+				<h2>Meu Histórico de Cálculos</h2>
+				<div id="history-list">
+					<p>A carregar o seu histórico...</p>
+				</div>
+			</section>
+
 			<dialog id="register-modal">
 				<h2>Criar Conta</h2>
 				<form id="register-form">
