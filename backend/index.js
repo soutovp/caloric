@@ -2,12 +2,14 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client'); // O comunicador do Prisma
 const bcrypt = require('bcryptjs'); // A ferramenta de criptografia
+const cors = require('cors');
 
 // 2. Inicializar a aplicação Express
 const app = express();
 const prisma = new PrismaClient();
 
 // 3. Adicionar um "tradutor" para o Express entender JSON
+app.use(cors());
 app.use(express.json());
 
 // 3. Definir a porta onde o nosso servidor irá "ouvir"
