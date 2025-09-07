@@ -10,10 +10,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	const openRegisterBtn = document.getElementById('open-register-modal-btn');
 	const closeRegisterBtn = document.getElementById('close-register-modal-btn');
 	const registerForm = document.getElementById('register-form');
+	// Obter os elementos do modal de login
+	const loginModal = document.getElementById('login-modal');
+	const openLoginBtn = document.getElementById('open-login-modal-btn');
+	const closeLoginBtn = document.getElementById('close-login-modal-btn');
+	const loginForm = document.getElementById('login-form');
 
 	// Lógica para abrir e fechar o modal
 	openRegisterBtn.addEventListener('click', () => registerModal.showModal());
 	closeRegisterBtn.addEventListener('click', () => registerModal.close());
+	openLoginBtn.addEventListener('click', () => loginModal.showModal());
+	closeLoginBtn.addEventListener('click', () => loginModal.close());
 
 	form.addEventListener('submit', function (event) {
 		event.preventDefault();
@@ -137,6 +144,41 @@ document.addEventListener('DOMContentLoaded', function () {
 			// No futuro, podemos fazer o login automático aqui
 		} catch (error) {
 			// Se houver um erro de rede ou o erro que atirámos acima
+			alert(error.message);
+		}
+	});
+
+	// Lógica para submeter o formulário de login
+	loginForm.addEventListener('submit', async (event) => {
+		event.preventDefault();
+
+		const email = document.getElementById('login-email').value;
+		const password = document.getElementById('login-password').value;
+
+		try {
+			const response = await fetch(`${API_URL}/api/login`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ email, password }),
+			});
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				throw new Error(data.error || 'Erro ao fazer login.');
+			}
+
+			// O PASSO MAIS IMPORTANTE: Guardar o token!
+			localStorage.setItem('authToken', data.token);
+
+			alert('Login bem-sucedido!');
+			loginModal.close();
+
+			// Futuramente: Atualizar a UI para mostrar que o utilizador está logado
+			// Ex: esconder os botões de "Login/Registo" e mostrar "Meu Histórico"
+		} catch (error) {
 			alert(error.message);
 		}
 	});
