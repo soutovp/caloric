@@ -1,8 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
+	const API_URL = 'https://caloric.onrender.com'; // <-- SUBSTITUA PELO SEU URL REAL
 	const form = document.getElementById('calculator-form');
 	const calculatorContainer = document.getElementById('calculator-container');
 	const resultsContainer = document.getElementById('results-container');
 	const returnButton = document.getElementById('return-button');
+
+	// Obter os elementos do modal de registo
+	const registerModal = document.getElementById('register-modal');
+	const openRegisterBtn = document.getElementById('open-register-modal-btn');
+	const closeRegisterBtn = document.getElementById('close-register-modal-btn');
+	const registerForm = document.getElementById('register-form');
+
+	// Lógica para abrir e fechar o modal
+	openRegisterBtn.addEventListener('click', () => registerModal.showModal());
+	closeRegisterBtn.addEventListener('click', () => registerModal.close());
 
 	form.addEventListener('submit', function (event) {
 		event.preventDefault();
@@ -94,6 +105,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		calculatorContainer.classList.add('hidden');
 		resultsContainer.classList.remove('hidden');
+	});
+
+	// Lógica para submeter o formulário de registo
+	registerForm.addEventListener('submit', async (event) => {
+		event.preventDefault();
+
+		const name = document.getElementById('register-name').value;
+		const email = document.getElementById('register-email').value;
+		const password = document.getElementById('register-password').value;
+
+		try {
+			const response = await fetch(`${API_URL}/api/register`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ name, email, password }),
+			});
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				// Se a resposta do servidor for um erro (ex: e-mail já existe)
+				throw new Error(data.error || 'Erro ao registar.');
+			}
+
+			// Se o registo for bem-sucedido
+			alert('Conta criada com sucesso!');
+			registerModal.close();
+			// No futuro, podemos fazer o login automático aqui
+		} catch (error) {
+			// Se houver um erro de rede ou o erro que atirámos acima
+			alert(error.message);
+		}
 	});
 
 	returnButton.addEventListener('click', function () {
