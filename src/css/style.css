@@ -6,7 +6,8 @@
 	--cor-primaria: #0d47a1; /* Um azul profundo para confiança e serenidade */
 	--cor-destaque: #ff7043; /* Um laranja coral para ação e motivação */
 	--cor-sucesso: #4caf50; /* Um verde para feedback positivo */
-	--cor-fundo: #f7f9fc; /* Um cinza muito claro para um fundo limpo */
+	--cor-fundo: #eceff3; /* Um cinza muito claro para um fundo limpo */
+	--cor-fundo-claro: #fdfdfd;
 	--cor-texto-principal: #263238; /* Um cinza-chumbo para leitura confortável */
 	--cor-texto-secundario: #546e7a; /* Um cinza médio para textos de apoio */
 	--cor-borda: #cfd8dc; /* Uma cor suave para as bordas dos inputs */
@@ -18,9 +19,6 @@ body {
 	background-color: var(--cor-fundo);
 	color: var(--cor-texto-principal);
 	margin: 0;
-	padding: 20px;
-	display: grid;
-	place-items: center;
 	min-height: 100vh;
 	box-sizing: border-box;
 }
@@ -33,6 +31,7 @@ main {
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 	width: 100%;
 	max-width: 500px;
+	margin: 100px auto 20px auto;
 }
 
 h1 {
@@ -46,7 +45,6 @@ h1 {
 	font-weight: 600;
 	color: var(--cor-primaria);
 	text-align: center;
-	margin-bottom: 0.5rem;
 }
 
 p {
@@ -84,7 +82,7 @@ select:focus {
 }
 
 /* 4. O Botão de Ação (A Chamada para a Motivação) */
-button {
+button.action {
 	width: 100%;
 	padding: 1rem;
 	background-color: var(--cor-destaque);
@@ -96,8 +94,27 @@ button {
 	cursor: pointer;
 	transition: transform 0.2s ease, background-color 0.2s ease;
 }
-
-button:hover {
+#open-login-modal-btn{
+	color: var(--cor-primaria);
+	font-size: 1.2em;
+	font-weight: 600;
+}
+#open-login-modal-btn:hover{
+	cursor: pointer;
+}
+#logout-btn{
+	background-color: none;
+	border: none;
+	color: var(--cor-texto-principal);
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+#logout-btn:hover{
+	background-color: #546e7a;
+	color: #cfd8dc;
+	cursor: pointer;
+}
+button.action:hover {
 	transform: translateY(-2px);
 	background-color: #f85f2f; /* Um tom ligeiramente mais escuro de laranja */
 }
@@ -205,4 +222,58 @@ button:hover {
 	background-color: var(--cor-primaria);
 	color: white;
 	transform: translateY(-2px);
+}
+header{
+	background-color: var(--cor-fundo-claro);
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+header > div.container{
+	max-width: 1000px;
+	margin: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	justify-content: space-between;
+	padding: 10px 0;
+}
+
+#nav-anonymous > div.btnLoginRegister{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 20px;
+}
+.modal{
+	border: none;
+	border-radius: 10px;
+	position: relative;
+	overflow: visible;
+}
+#close-login-modal-btn{
+	width: 25px;
+	height: 25px;
+	border: none;
+	position: absolute;
+	right: -5px;
+	top: -5px;
+	border-radius: 100%;
+	background-color: rgb(109, 109, 109);
+	font-weight: 600;
+	color: white;
+}
+
+
+/*FOOTER*/
+footer{
+	display: flex;
+	justify-content: center;
+}
+footer a{
+	color: var(--cor-texto-secundario);
+}
+footer a:hover{
+	color: var(--cor-destaque);
 }

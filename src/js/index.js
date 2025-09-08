@@ -1,5 +1,8 @@
+import { logout } from './modules/auth.js';
+import { checkLogin, loginUser, registerUser } from './modules/api.js';
+import { User } from './modules/User.js';
+import '../css/style.css';
 document.addEventListener('DOMContentLoaded', function () {
-	const API_URL = 'https://caloric.onrender.com'; // <-- SUBSTITUA PELO SEU URL REAL
 	const form = document.getElementById('calculator-form');
 	const calculatorContainer = document.getElementById('calculator-container');
 	const resultsContainer = document.getElementById('results-container');
@@ -31,115 +34,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	form.addEventListener('submit', function (event) {
 		event.preventDefault();
-
-		// --- Captura de todos os dados, incluindo os novos ---
 		const weight = parseFloat(document.getElementById('weight').value);
 		const height = parseFloat(document.getElementById('height').value);
-		const age = parseInt(document.getElementById('age').value); // Novo!
-		const gender = document.getElementById('gender').value; // Novo!
+		const age = parseInt(document.getElementById('age').value);
+		const gender = document.getElementById('gender').value;
 		const objective = document.getElementById('objective').value;
 		const activityLevel = document.getElementById('activity-level').value;
+		const usuario = new User(weight, height, age, gender, objective, activityLevel);
+		const mifflinStJeorCalculation = usuario.mifflinStJeorCalculation;
 
-		// --- Validação atualizada ---
-		if (isNaN(weight) || isNaN(height) || isNaN(age) || weight <= 0 || height <= 0 || age <= 0) {
-			alert('Por favor, insira valores válidos para peso, altura e idade.');
-			return;
-		}
-
-		const heightInMeters = height / 100;
-		const bmi = weight / (heightInMeters * heightInMeters);
-
-		// --- NOVA FÓRMULA DE TMB (Mifflin-St Jeor) ---
-		let bmr;
-		if (gender === 'male') {
-			// Fórmula para homens: (10 * peso em kg) + (6.25 * altura em cm) - (5 * idade) + 5
-			bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-		} else {
-			// 'female'
-			// Fórmula para mulheres: (10 * peso em kg) + (6.25 * altura em cm) - (5 * idade) - 161
-			bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-		}
-
-		// O resto da lógica (TDEE, ajuste de objetivo, macros) continua igual,
-		// mas agora usará a nossa TMB (bmr) muito mais precisa!
-		let tdee;
-		switch (activityLevel) {
-			case 'sedentary':
-				tdee = bmr * 1.2;
-				break;
-			case 'light':
-				tdee = bmr * 1.375;
-				break;
-			case 'moderate':
-				tdee = bmr * 1.55;
-				break;
-			case 'very':
-				tdee = bmr * 1.725;
-				break;
-			default:
-				tdee = bmr * 1.2;
-		}
-		const calorieAdjustment = 500;
-		let finalCalories;
-		if (objective === 'lose') {
-			finalCalories = tdee - calorieAdjustment;
-		} else if (objective === 'gain') {
-			finalCalories = tdee + calorieAdjustment;
-		} else {
-			finalCalories = tdee;
-		}
-		const carbsGrams = (finalCalories * 0.4) / 4;
-		const proteinGrams = (finalCalories * 0.3) / 4;
-		const fatGrams = (finalCalories * 0.3) / 9;
-
-		document.getElementById('result-calories').textContent = finalCalories.toFixed(0);
-		document.getElementById('result-protein').textContent = proteinGrams.toFixed(0) + 'g';
-		document.getElementById('result-carbs').textContent = carbsGrams.toFixed(0) + 'g';
-		document.getElementById('result-fat').textContent = fatGrams.toFixed(0) + 'g';
-		document.getElementById('result-bmi').textContent = bmi.toFixed(2);
+		document.getElementById('result-calories').textContent = mifflinStJeorCalculation.finalCalories;
+		document.getElementById('result-protein').textContent = mifflinStJeorCalculation.proteinGrams + 'g';
+		document.getElementById('result-carbs').textContent = mifflinStJeorCalculation.carbsGrams + 'g';
+		document.getElementById('result-fat').textContent = mifflinStJeorCalculation.fatGrams + 'g';
+		document.getElementById('result-bmi').textContent = mifflinStJeorCalculation.bmi;
 
 		const bmiClassificationEl = document.getElementById('bmi-classification');
-		let classification = '';
-		let classificationClass = '';
-		if (bmi < 18.5) {
-			classification = 'Abaixo do peso ideal';
-			classificationClass = 'status-underweight';
-		} else if (bmi >= 18.5 && bmi < 25) {
-			classification = 'Peso ideal';
-			classificationClass = 'status-ideal';
-		} else if (bmi >= 25 && bmi < 30) {
-			classification = 'Acima do peso (Sobrepeso)';
-			classificationClass = 'status-overweight';
-		} else {
-			classification = 'Obesidade';
-			classificationClass = 'status-obesity';
-		}
-		bmiClassificationEl.innerHTML = `<p>${classification}</p>`;
-		bmiClassificationEl.className = `result-item ${classificationClass}`;
+
+		bmiClassificationEl.innerHTML = `<p>${mifflinStJeorCalculation.classification.title}</p>`;
+		bmiClassificationEl.className = `result-item ${mifflinStJeorCalculation.classification.class}`;
 
 		calculatorContainer.classList.add('hidden');
 		resultsContainer.classList.remove('hidden');
 
 		const token = localStorage.getItem('authToken');
-
 		if (token) {
-			//Se estiver logado, reunimos os dados e chamamos a função para salvar
-			const calculationData = {
-				weight,
-				height,
-				age,
-				gender,
-				activityLevel,
-				objective,
-				bmi,
-				finalCalories,
-				proteinGrams,
-				carbsGrams,
-				fatGrams,
-			};
+			const calculationData = mifflinStJeorCalculation.calculationData;
 			saveCalculationToServer(calculationData, token);
 		}
-		//Se não houver token, não fazemos nada. O utilizador anônimo apenas vê o resultado.
 	});
 
 	// Lógica para submeter o formulário de registo
@@ -151,25 +73,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		const password = document.getElementById('register-password').value;
 
 		try {
-			const response = await fetch(`${API_URL}/api/register`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ name, email, password }),
-			});
+			const newUser = await registerUser(name, email, password);
+			console.log('Utilizador registrado:', newUser);
 
-			const data = await response.json();
-
-			if (!response.ok) {
-				// Se a resposta do servidor for um erro (ex: e-mail já existe)
-				throw new Error(data.error || 'Erro ao registar.');
-			}
-
-			// Se o registo for bem-sucedido
 			alert('Conta criada com sucesso!');
 			registerModal.close();
-			// No futuro, podemos fazer o login automático aqui
 		} catch (error) {
 			// Se houver um erro de rede ou o erro que atirámos acima
 			alert(error.message);
@@ -184,24 +92,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		const password = document.getElementById('login-password').value;
 
 		try {
-			const response = await fetch(`${API_URL}/api/login`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ email, password }),
-			});
-
-			const data = await response.json();
-
-			if (!response.ok) {
-				throw new Error(data.error || 'Erro ao fazer login.');
-			}
-
-			// O PASSO MAIS IMPORTANTE: Guardar o token!
+			const data = await loginUser(email, password);
+			
 			localStorage.setItem('authToken', data.token);
-
 			alert('Login bem-sucedido!');
+
 			loginModal.close();
 
 			checkLoginStatus();
@@ -211,15 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 	// --- FUNÇÕES PRINCIPAIS ---
-
-	/**
-	 * Função para fazer logout do utilizador
-	 */
-	const logout = () => {
-		localStorage.removeItem('authToken');
-		updateUIForLoggedOutUser();
-		alert('Sessão terminada.');
-	};
 
 	/**
 	 * Atualiza a UI para o estado "Logado"
@@ -294,26 +180,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	 * Verifica o estado de login quando a página carrega
 	 */
 	const checkLoginStatus = async () => {
-		const token = localStorage.getItem('authToken');
-		if (!token) {
-			updateUIForLoggedOutUser();
-			return;
-		}
-
-		// Se existe um token, vamos validá-lo pedindo os dados do utilizador
 		try {
-			const response = await fetch(`${API_URL}/api/me`, {
-				headers: { Authorization: `Bearer ${token}` },
-			});
-
-			if (!response.ok) {
-				// Se o token for inválido (expirado, etc.), fazemos o logout
-				logout();
-				return;
-			}
-
-			const userData = await response.json();
-			updateUIForLoggedInUser(userData);
+			const response = await checkLogin();
+			updateUIForLoggedInUser(await response);
 		} catch (error) {
 			console.error('Erro ao verificar o token:', error);
 			updateUIForLoggedOutUser();
@@ -349,7 +218,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	};
 
 	// --- EVENTOS GLOBAIS ---
-	logoutBtn.addEventListener('click', logout);
+	logoutBtn.addEventListener('click', () => {
+		logout();
+		updateUIForLoggedOutUser();
+		alert('Sessão terminada.');
+	});
 
 	// --- PONTO DE PARTIDA ---
 	checkLoginStatus(); // Verifica o estado de login assim que a página está pronta
