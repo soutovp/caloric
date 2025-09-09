@@ -3,21 +3,9 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title><%= title %></title>
+		<title><% title %></title>
 		<meta name="description" content="<%= meta.description %>" />
-		<% if (meta.og) { %>
-		<meta property="og:type" content="<%= meta.og.type %>" />
-		<meta property="og:url" content="<%= meta.og.url %>" />
-		<meta property="og:title" content="<%= meta.og.title %>" />
-		<meta property="og:description" content="<%= meta.og.description %>" />
-		<!-- <meta property="og:image" content="<%#= meta.og.image %>" /> -->
-		<% } %>
-		<% if (meta.twitter) { %>
-		<meta property="twitter:card" content="<%= meta.twitter.card %>" />
-		<meta property="twitter:url" content="<%= meta.twitter.url %>" />
-		<meta property="twitter:title" content="<%= meta.twitter.title %>" />
-		<meta property="twitter:description" content="<%= meta.twitter.description %>" />
-		<% } %>
+		
 		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8887540917989782" crossorigin="anonymous"></script>
 
 		<!-- Google tag (gtag.js) -->

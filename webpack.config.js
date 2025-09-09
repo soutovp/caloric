@@ -2,34 +2,39 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { title } = require('process');
 const SitemapWebpackPlugin = require('sitemap-webpack-plugin').default;
 
-const paths = ['/', '/sobre'];
-
-// DEFINIMOS OS NOSSOS DADOS AQUI, NUM SÓ LUGAR
-const templateData = {
+// --- DADOS PARA CADA PÁGINA ---
+const indexData = {
 	title: 'Caloric: Calculadora de Calorias e Macronutrientes',
 	meta: {
 		description: 'Calcule sua meta diária de calorias e macronutrientes de forma gratuita e precisa com o Caloric.',
 		og: {
-			type: 'website',
-			url: 'https://caloric.com.br/',
-			title: 'Caloric: Calculadora de Calorias e Macronutrientes',
-			description: 'Calcule suas metas diárias de calorias e macros de forma gratuita e precisa.',
-			image: '',
+			/* ... seus dados de OG ... */
 		},
 		twitter: {
-			card: 'summary_large_image',
-			url: 'https://caloric.com.br',
-			title: 'Caloric: Calculadora de Calorias e Macronutrientes',
-			description: 'Calcule suas metas diárias de calorias e macros de forma gratuita e precisa.',
+			/* ... seus dados de Twitter ... */
 		},
 	},
 };
 
+const sobreData = {
+	title: 'Sobre nós | Caloric',
+	meta: {
+		description: 'Descubra a missão e a história por trás da ferramenta Caloric.',
+	},
+};
+
+const privacidadeData = {
+	title: 'Política de Privacidade | Caloric',
+	meta: {
+		description: 'Conheça nossa política de privacidade e como lidamos com seus dados.',
+	},
+};
+
+// --- CONFIGURAÇÃO DO WEBPACK ---
 module.exports = {
-	entry: './src/js/index.js',
+	entry: './src/js/script.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
@@ -46,45 +51,47 @@ module.exports = {
 				test: /\.css$/,
 				use: [MiniCssExtractPlugin.loader, 'css-loader'],
 			},
-			{
-				test: /\.ejs$/,
-				use: [
-					'html-loader',
-					{
-						loader: 'ejs-plain-loader',
-						// A CORREÇÃO ESTÁ AQUI:
-						options: {
-							// Passamos os nossos dados diretamente para o loader
-							data: templateData,
-						},
-					},
-				],
-			},
+			// {
+			// 	test: /\.ejs$/,
+			// 	use: [
+			// 		{
+			// 			loader: 'ejs-loader',
+			// 			options: {
+			// 				esModule: false,
+			// 			},
+			// 		},
+			// 	],
+			// },
 		],
 	},
+	// Dentro do seu webpack.config.js
+
+	// Dentro do seu webpack.config.js
+
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: './src/index.ejs',
-			// inject: 'body',
+			// A MÁGICA ESTÁ AQUI: Forçamos o ejs-loader com as opções corretas
+			template: '!!ejs-loader?{"esModule":false}!./src/index.ejs',
 			filename: 'index.html',
 			chunks: ['main'],
-			customData: templateData,
+			templateParameters: indexData,
 		}),
 		new HtmlWebpackPlugin({
-			template: './src/sobre.ejs',
+			template: '!!ejs-loader?{"esModule":false}!./src/sobre.ejs',
 			filename: 'sobre.html',
 			chunks: ['main'],
-			customData: {
-				title: 'Sobre nós | Caloric',
-				meta: {
-					description: 'Descubra a missão e a história por trás da ferramenta Caloric.',
-				},
-			},
+			templateParameters: sobreData,
+		}),
+		new HtmlWebpackPlugin({
+			template: '!!ejs-loader?{"esModule":false}!./src/privacidade.ejs',
+			filename: 'privacidade.html',
+			chunks: ['main'],
+			templateParameters: privacidadeData,
 		}),
 		new MiniCssExtractPlugin(),
 		new SitemapWebpackPlugin({
 			base: 'https://caloric.com.br',
-			paths,
+			paths: ['/', '/sobre.html', '/privacidade.html'],
 		}),
 	],
 	devServer: {
