@@ -1,0 +1,17 @@
+
+header{
+	background-color: var(--cor-fundo-claro);
+	position: sticky;
+	top: 0;
+	width: 100%;
+}
+header > div.container{
+	max-width: 1000px;
+	margin: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	justify-content: space-between;
+	padding: 10px 0;
+}

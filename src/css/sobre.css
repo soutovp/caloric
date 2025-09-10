@@ -7,16 +7,6 @@
 	--cor-texto-secundario: #546e7a; /* Um cinza médio para textos de apoio */
 	--cor-borda: #cfd8dc; /* Uma cor suave para as bordas dos inputs */
 }
-body {
-	font-family: 'Poppins', sans-serif;
-	background-color: var(--cor-fundo);
-	color: var(--cor-texto-principal);
-	margin: 0;
-	padding: 20px;
-	place-items: center;
-	min-height: 100vh;
-	box-sizing: border-box;
-}
 h1 {
 	text-align: center;
 }

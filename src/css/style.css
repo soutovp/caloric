@@ -18,11 +18,11 @@ body {
 	font-family: 'Poppins', sans-serif;
 	background-color: var(--cor-fundo);
 	color: var(--cor-texto-principal);
+	padding: 0;
 	margin: 0;
 	min-height: 100vh;
 	box-sizing: border-box;
 }
-
 /* 2. Layout Principal (O Cartão Central) */
 main {
 	background-color: white;
@@ -52,34 +52,6 @@ p {
 	margin-bottom: 2rem;
 }
 
-/* 3. Estilos do Formulário */
-.form-group {
-	margin-bottom: 1.5rem;
-}
-
-label {
-	display: block;
-	margin-bottom: 0.5rem;
-	font-weight: 600;
-}
-
-input,
-select {
-	width: 100%;
-	padding: 0.8rem;
-	border: 1px solid var(--cor-borda);
-	border-radius: 8px;
-	font-size: 1rem;
-	font-family: 'Poppins', sans-serif;
-	box-sizing: border-box;
-}
-
-input:focus,
-select:focus {
-	outline: none;
-	border-color: var(--cor-primaria);
-	box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
-}
 
 /* 4. O Botão de Ação (A Chamada para a Motivação) */
 button.action {
@@ -94,6 +66,7 @@ button.action {
 	cursor: pointer;
 	transition: transform 0.2s ease, background-color 0.2s ease;
 }
+/* Modal */
 #open-login-modal-btn{
 	color: var(--cor-primaria);
 	font-size: 1.2em;
@@ -223,22 +196,7 @@ button.action:hover {
 	color: white;
 	transform: translateY(-2px);
 }
-header{
-	background-color: var(--cor-fundo-claro);
-	position: fixed;
-	top: 0;
-	width: 100%;
-}
-header > div.container{
-	max-width: 1000px;
-	margin: auto;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	width: 100%;
-	justify-content: space-between;
-	padding: 10px 0;
-}
+
 
 #nav-anonymous > div.btnLoginRegister{
 	display: flex;

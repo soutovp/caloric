@@ -1,7 +1,9 @@
-import { logout } from './modules/auth.js';
-import { checkLogin, loginUser, registerUser } from './modules/api.js';
-import { User } from './modules/User.js';
+import '../css/header.css';
 import '../css/style.css';
+import '../css/index.css';
+import { logout } from './modules/auth.js';
+import { checkLogin, getHistory, loginUser, registerUser, saveCalcOnServer } from './modules/api.js';
+import { User } from './modules/User.js';
 document.addEventListener('DOMContentLoaded', function () {
 	const form = document.getElementById('calculator-form');
 	const calculatorContainer = document.getElementById('calculator-container');
@@ -137,21 +139,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (!token) return;
 
 		try {
-			const response = await fetch(`${API_URL}/api/calculations`, {
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-
-			if (response.status === 401 || response.status === 403) {
-				// Token inválido ou expirado! Fazemos o logout.
-				logout();
-				throw new Error('Sessão inválida ou expirada.');
-			}
-
-			const calculations = await response.json();
-
+			const calculations = await getHistory(token);
+			
 			// Renderiza o histórico na página
 			historyList.innerHTML = ''; // Limpa a lista antes de a preencher
 			if (calculations.length === 0) {
@@ -196,21 +185,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	 */
 	const saveCalculationToServer = async (calculationData, token) => {
 		try {
-			const response = await fetch(`${API_URL}/api/calculations`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify(calculationData),
-			});
+			const response = saveCalcOnServer(calculationData, token);
 
-			if (!response.ok) {
-				throw new Error('Falha ao salvar o cálculo.');
+			if(response === 'ok'){
+				console.log('Cálculo salvo com sucesso!');
+				fetchHistory(); // <-- A MÁGICA: Atualiza a lista de histórico em tempo real!
 			}
-
-			console.log('Cálculo salvo com sucesso!');
-			fetchHistory(); // <-- A MÁGICA: Atualiza a lista de histórico em tempo real!
 		} catch (error) {
 			console.error('Erro ao salvar cálculo:', error);
 			alert('Não foi possível salvar o seu cálculo no histórico.');

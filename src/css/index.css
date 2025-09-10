@@ -1,0 +1,27 @@
+/* 3. Estilos do Formulário */
+.form-group {
+	margin-bottom: 1.5rem;
+}
+label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-weight: 600;
+}
+
+input,
+select {
+	width: 100%;
+	padding: 0.8rem;
+	border: 1px solid var(--cor-borda);
+	border-radius: 8px;
+	font-size: 1rem;
+	font-family: 'Poppins', sans-serif;
+	box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+	outline: none;
+	border-color: var(--cor-primaria);
+	box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
+}

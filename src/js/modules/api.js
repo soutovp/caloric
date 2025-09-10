@@ -59,3 +59,35 @@ export async function checkLogin(){
 
 	return data;
 }
+
+export async function saveCalcOnServer(calculationData, token){
+	const response = await fetch(`${API_URL}/api/calculations`,{
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify(calculationData),
+	});
+
+	if(!response.ok){
+		throw new Error('Falha ao salvar o cálculo.');
+	}
+	return 'ok';
+}
+
+export async function getHistory(token){
+	const response = await fetch(`${API_URL}/api/calculations`,{
+		method: 'GET',
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+
+	if(response.status === 401 ||  response.status === 403){
+		logout();
+		throw new Error('Sessão inválida ou expirada.');
+	}
+
+	return response.json();
+}
