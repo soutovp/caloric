@@ -20,43 +20,26 @@ export async function registerUser(name, email, password) {
 	// Se o registo for bem-sucedido
 	return data;
 }
-
-export async function loginUser(email, password){
-	const response = await fetch(`${API_URL}/api/login`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({email, password}),
-	});
-
-	const data = await response.json();
-
-	if(!response.ok){
-		throw new Error(data.error || 'Erro ao registrar.');
-	}
-
-	return data;
-}
-
 export async function checkLogin(){
+	console.log('Checando API "checkLogin"');
 	const token = localStorage.getItem('authToken');
-	if (!token) {
-		updateUIForLoggedOutUser();
-		return;
-	}
+	if (!token) throw new Error(JSON.parse({status:403, message:'You do not have login'}));
+	console.log('You have token');
+	
 	const response = await fetch(`${API_URL}/api/me`, {
 		headers: {Authorization: `Bearer ${token}`}
 	});
+	console.log(response);
+	// const data = response.json();
 
-	const data = await response.json();
-
+	// console.log(JSON.stringify(data));
+	// console.log(JSON.stringify(data));
 	if (!response.ok) {
 		// Se o token for inválido (expirado, etc.), fazemos o logout
 		logout();
 		return;
 	}
-
+	// console.log(data);
 	return data;
 }
 

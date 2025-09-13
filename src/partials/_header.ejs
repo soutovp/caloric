@@ -4,24 +4,20 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title><%= title %></title>
-		<meta name="description" content="<%= meta.description %>">
-		<meta name="keywords" content="<%= meta.keywords %>">
-		<meta name="robots" content="<%= meta.robots %>">
-		<meta name="theme-color" content="<%= meta.themeColor %>">
+		<% Object.keys(meta).forEach((key)=>{ %>
+        <meta name="<%= key %>" content="<%= meta[key] %>">
+    	<% }) %>
 		<link rel="canonical" href="<%= canonicalUrl %>">
-
-		<meta property="og:type" content="<%= og.type %>">
-		<meta property="og:url" content="<%= og.url %>">
-		<meta property="og:title" content="<%= og.title %>">
-		<meta property="og:description" content="<%= og.description %>">
-		<meta property="og:image" content="<%= og.image %>">
-		<meta property="og:site_name" content="<%= og.siteName %>">
-
-		<meta name="twitter:card" content="<%= twitter.card %>">
-		<meta name="twitter:title" content="<%= twitter.title %>">
-		<meta name="twitter:description" content="<%= twitter.description %>">
-		<meta name="twitter:image" content="<%= twitter.image %>">
-		
+		<% if(typeof og !== 'undefined' && og){ %>
+			<% Object.keys(og).forEach((key)=>{ %>
+				<meta property="<%= 'og:'+key %>" content="<%= og[key] %>">
+			<% }) %>
+		<% } %>
+		<% if(typeof twitter !== 'undefined' && twitter){ %>
+			<% Object.keys(twitter).forEach((key)=>{ %>
+				<meta name="<%= 'twitter:'+key %>" content="<%= twitter[key] %>">
+			<% }) %>
+		<% } %>
 		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8887540917989782" crossorigin="anonymous"></script>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SNQZ6LWCKB"></script>
@@ -31,7 +27,6 @@
 				dataLayer.push(arguments);
 			}
 			gtag('js', new Date());
-
 			gtag('config', 'G-SNQZ6LWCKB');
 		</script>
 	</head>
@@ -39,7 +34,9 @@
 	<header>
 		<div class="container">
 			<div class="logo">
-				<span>Caloric</span>
+				<a href="/">
+					<span>Caloric</span>
+				</a>
 			</div>
 			<div class="headerRight">
 				<div id="user-greeting" class="hidden"></div>
@@ -55,3 +52,5 @@
 			</div>
 		</div>
 	</header>
+	<%- include('../modals/modal.ejs', {modal:'login'}) %>
+	<%- include('../modals/modal.ejs', {modal:'register'}) %>

@@ -21,8 +21,9 @@ const generateHtml = (templatePath, data) => {
 
 module.exports = {
 	entry: {
-		app:'./src/js/script.js',
-		sobre: './src/js/sobre.js'
+		main: './src/js/app.js',
+		sobre: './src/js/sobre.js',
+		privacidade: './src/js/privacidade.js',
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -47,7 +48,7 @@ module.exports = {
 		// --- PÁGINA INICIAL ---
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
-			chunks: ['app'],
+			chunks: ['main'],
 			inject: 'body',
 			templateContent: generateHtml('./src/index.ejs', {
 				title: 'Caloric: Calculadora de Calorias, Macros e IMC Precisa',
@@ -89,14 +90,12 @@ module.exports = {
 				lang: 'pt-br',
 				// URL Canónica específica para esta página
 				canonicalUrl: 'https://caloric.com.br/sobre.html',
-
 				meta: {
 					description: 'Descubra a história e a missão por trás do Caloric, a sua ferramenta gratuita para uma vida mais saudável e consciente da sua nutrição.',
 					keywords: 'sobre caloric, missão caloric, ferramenta de saúde, nutrição, bem-estar',
 					robots: 'index, follow',
 					themeColor: '#0D47A1',
 				},
-
 				og: {
 					// Tags para partilha em redes sociais
 					title: 'A Missão do Caloric: Simplificar a Sua Jornada de Saúde',
@@ -107,7 +106,6 @@ module.exports = {
 					image: 'https://caloric.com.br/assets/caloric-social-preview.png',
 					siteName: 'Caloric',
 				},
-
 				twitter: {
 					// Tags para o Twitter
 					card: 'summary_large_image',
@@ -115,19 +113,20 @@ module.exports = {
 					description: 'Conheça a visão por trás da nossa ferramenta e como queremos ajudá-lo a atingir os seus objetivos.',
 					image: 'https://caloric.com.br/assets/caloric-social-preview.png',
 				},
-
 				// --- Fim das Meta Tags Otimizadas ---
 			}),
 		}),
 		// --- PÁGINA PRIVACIDADE ---
 		new HtmlWebpackPlugin({
 			filename: 'privacidade.html',
+			chunks: ['privacidade'],
 			inject: 'body',
 			templateContent: generateHtml('./src/privacidade.ejs', {
 				title: 'Políticas de Privacidade | Caloric',
 				meta: {
 					description: 'Entenda nossas políticas de privacidade no app do Caloric.',
 				},
+				canonicalUrl: 'https://caloric.com.br/privacidade.html',
 			}),
 		}),
 		new MiniCssExtractPlugin(),
@@ -145,7 +144,7 @@ module.exports = {
 		open: true,
 		hot: true,
 		watchFiles: ['src/**/*'],
-		devMiddleware:{
+		devMiddleware: {
 			writeToDisk: true,
 		},
 	},
