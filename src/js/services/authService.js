@@ -6,7 +6,7 @@ export const setToken = (token) => localStorage.setItem('authToken', token);
 export const removeToken = () => localStorage.removeItem('authToken');
 
 export async function performLogin(email, password) {
-	const response = await fetch(`${API_URL}/api/login`, {
+	const response = await fetch(`${API_URL}/api/auth/login`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -23,13 +23,28 @@ export async function performLogin(email, password) {
 	return data; // Pode conter dados do utilizador além do token
 }
 
+export async function performRegister(name, email, password){
+	const response = await fetch(`${API_URL}/api/auth/register`,{
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({email, password, name}),
+	});
+	const data = await response.json();
+
+	if(!response.ok){
+		throw new Error(data.error || 'Erro ao fazer login.');
+	}
+}
+
 export async function verifyToken() {
 	const token = getToken();
 	if (!token) {
 		throw new Error('No authentication token found.');
 	}
 
-	const response = await fetch(`${API_URL}/api/me`, {
+	const response = await fetch(`${API_URL}/api/auth/me`, {
 		headers: { Authorization: `Bearer ${token}` },
 	});
 

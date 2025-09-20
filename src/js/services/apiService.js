@@ -5,7 +5,7 @@ import { getToken, removeToken } from './authService';
 // Função auxiliar para requests autenticadas
 const authenticatedFetch = async (endpoint, options = {}) => {
 	const token = getToken();
-	if (!token && endpoint !== '/api/register' && endpoint !== '/api/login') {
+	if (!token && endpoint !== '/api/auth/register' && endpoint !== '/api/auth/login') {
 		// Não exige token para registrar/login
 		throw new Error('Authentication required.', { cause: 403 });
 	}
@@ -32,7 +32,7 @@ const authenticatedFetch = async (endpoint, options = {}) => {
 };
 
 export async function registerUser(name, email, password) {
-	return authenticatedFetch('/api/register', {
+	return authenticatedFetch('/api/auth/register', {
 		method: 'POST',
 		body: JSON.stringify({ name, email, password }),
 	});

@@ -27,6 +27,7 @@ model User {
   gender    String?
   objective String?
   activity  String?
+  googleId  String? @unique // Para aithemticação Google
 
   calculations Calculation[]
   

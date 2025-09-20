@@ -1,5 +1,7 @@
 import { logout } from "./auth";
-const API_URL = 'https://caloric.onrender.com';
+import 'dotenv';
+// const API_URL = 'https://caloric.onrender.com';
+const API_URL = 'http://localhost:3000';
 
 export async function registerUser(name, email, password) {
 	const response = await fetch(`${API_URL}/api/register`, {

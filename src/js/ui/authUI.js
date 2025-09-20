@@ -1,17 +1,24 @@
 // src/js/ui/authUI.js
 const loginModal = document.getElementById('login-modal');
+const registerModal = document.getElementById('register-modal');
 const openLoginBtn = document.getElementById('open-login-modal-btn');
+const openRegisterBtn = document.getElementById('open-register-modal-btn');
+const closeRegisterBtn = document.getElementById('close-register-modal-btn');
 const closeLoginBtn = document.getElementById('close-login-modal-btn');
 const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
 const logoutBtn = document.getElementById('logout-btn');
 const navAnonymous = document.getElementById('nav-anonymous');
 const navLoggedIn = document.getElementById('nav-logged-in');
 const userGreeting = document.getElementById('user-greeting');
 
 // Inicializa os event listeners do modal
-export const setupAuthUI = (onLoginSubmit, onLogoutClick) => {
+export const setupAuthUI = (onLoginSubmit, onLogoutClick, onRegisterSubmit) => {
 	if (openLoginBtn) openLoginBtn.addEventListener('click', () => loginModal.showModal());
 	if (closeLoginBtn) closeLoginBtn.addEventListener('click', () => loginModal.close());
+	if(openRegisterBtn) openRegisterBtn.addEventListener('click',()=>{
+		registerModal.showModal()});
+	if(closeRegisterBtn) closeRegisterBtn.addEventListener('click',()=>registerModal.close());
 	if (logoutBtn) logoutBtn.addEventListener('click', onLogoutClick);
 	if (loginForm) {
 		loginForm.addEventListener('submit', (event) => {
@@ -19,6 +26,16 @@ export const setupAuthUI = (onLoginSubmit, onLogoutClick) => {
 			const email = document.getElementById('login-email').value;
 			const password = document.getElementById('login-password').value;
 			onLoginSubmit(email, password);
+		});
+	}
+	if(registerForm){
+		registerForm.addEventListener('submit', event =>{
+			event.preventDefault();
+			const name = document.getElementById('register-name').value;
+			const email = document.getElementById('register-email').value;
+			const password = document.getElementById('register-password').value;
+			onRegisterSubmit(name, email, password);
+			registerModal.close();
 		});
 	}
 };

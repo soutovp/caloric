@@ -10,7 +10,7 @@ import '../css/index.css';
 
 // Modelos e Serviços
 import { User } from './modules/User.js';
-import { performLogin, verifyToken, removeToken } from './services/authService.js';
+import { performLogin, performRegister, verifyToken, removeToken } from './services/authService.js';
 import { saveCalculation, getCalculationsHistory } from './services/apiService.js';
 
 // Módulos de UI
@@ -31,6 +31,17 @@ const handleLogin = async (email, password) => {
 	} catch (error) {
 		console.error('Erro no login:', error);
 		alert(error.message || 'Erro ao fazer login.');
+	}
+};
+
+const handleRegister = async(name, email, password)=>{
+	try{
+		const userData = await performRegister(name, email, password);
+		console.log(userData);
+		alert('Registro bem-sucedido');
+	}catch(error){
+		console.error('Error no registro:', error);
+		alert(error.message || 'Erro ao cadastrar.');
 	}
 };
 
@@ -97,7 +108,7 @@ const refreshAppState = async () => {
 
 // --- PONTO DE PARTIDA DA APLICAÇÃO ---
 document.addEventListener('DOMContentLoaded', () => {
-	setupAuthUI(handleLogin, handleLogout); // Passa os handlers para o módulo de UI
+	setupAuthUI(handleLogin, handleLogout, handleRegister); // Passa os handlers para o módulo de UI
 	setupCalculatorUI(handleCalculate); // Passa o handler para o módulo da calculadora
 
 	// Inicia a aplicação verificando o estado de login
