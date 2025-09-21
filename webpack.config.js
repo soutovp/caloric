@@ -130,7 +130,7 @@ module.exports = {
 		}),
 		// --- PÁGINA DE BLOG - CALCULATION ---
 		new HtmlWebpackPlugin({
-			filename: 'calculo.html',
+			filename: '/blog/calculo.html',
 			chunks: ['main'],
 			inject: 'body',
 			templateContent: generateHtml('./src/blog.ejs', {
