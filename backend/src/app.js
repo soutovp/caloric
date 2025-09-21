@@ -23,7 +23,9 @@ app.get('/', (req,res)=>{
 
 // ROTAS
 const authRoutes = require('./routes/authRoutes.js');
+const calculationRoutes = require('./routes/calculationRoutes');
 app.use('/api/auth', authRoutes);
+app.use('/api/calculations', calculationRoutes);
 
 // Middlewares de tratamento de erro ( DEVE ser o último a ser adicionado)
 app.use(notFound);

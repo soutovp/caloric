@@ -49,6 +49,7 @@ model Calculation{
 
   //Resultado do cálculo
   bmi           Float
+  bmiClassification String // ESSENCIAL: Campo para armazenar a classificação do IMC
   finalCalories Float
   proteinGrams  Float
   carbsGrams    Float

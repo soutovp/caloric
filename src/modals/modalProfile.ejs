@@ -1,0 +1,53 @@
+<% // frontend/src/modals/modalProfile.ejs %>
+<dialog id="profile-modal" class="modal">
+    <h2>Meu Perfil</h2>
+    <div id="profile-display">
+        <p><strong>Nome:</strong> <span id="profile-name-display"></span></p>
+        <p><strong>Email:</strong> <span id="profile-email-display"></span></p>
+        <p><strong>Gênero:</strong> <span id="profile-gender-display"></span></p>
+        <p><strong>Objetivo:</strong> <span id="profile-objective-display"></span></p>
+        <p><strong>Nível de Atividade:</strong> <span id="profile-activity-level-display"></span></p>
+        <button id="open-edit-profile-btn" class="action">Editar Perfil</button>
+    </div>
+
+    <form id="edit-profile-form" class="hidden">
+        <h3>Editar Meus Dados</h3>
+        <div class="form-group">
+            <label for="edit-profile-name">Nome</label>
+            <input type="text" id="edit-profile-name" required />
+        </div>
+        <div class="form-group">
+            <label for="edit-profile-gender">Sexo Biológico</label>
+            <select id="edit-profile-gender" required>
+                <option value="" disabled>Selecione uma opção</option>
+                <option value="MALE">Masculino</option>
+                <option value="FEMALE">Feminino</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-profile-objective">Qual o seu objetivo?</label>
+            <select id="edit-profile-objective" required>
+                <option value="" disabled>Selecione uma opção</option>
+                <option value="LOSE_WEIGHT">Perder Peso</option>
+                <option value="MAINTAIN_WEIGHT">Manter o Peso</option>
+                <option value="GAIN_MUSCLE">Ganhar Massa Muscular</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-profile-activity-level">Nível de Atividade Física</label>
+            <select id="edit-profile-activity-level" required>
+                <option value="" disabled>Selecione uma opção</option>
+                <option value="SEDENTARY">Sedentário</option>
+                <option value="LIGHTLY_ACTIVE">Levemente Ativo</option>
+                <option value="MODERATELY_ACTIVE">Moderadamente Ativo</option>
+                <option value="VERY_ACTIVE">Muito Ativo</option>
+                <option value="EXTRA_ACTIVE">Extra Ativo</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="action">Salvar Alterações</button>
+            <button type="button" id="cancel-edit-profile-btn" class="secondary-action">Cancelar</button>
+        </div>
+    </form>
+    <button type="button" id="close-profile-modal-btn" class="close-btn">X</button>
+</dialog>

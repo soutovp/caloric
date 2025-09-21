@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const SitemapWebpackPlugin = require('sitemap-webpack-plugin').default;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const paths = ['/', '/sobre.html', '/privacidade.html'];
+const paths = ['/', '/sobre.html', '/privacidade.html', '/blog/calculation'];
 
 const generateHtml = (templatePath, data) => {
   const absoluteTemplatePath = path.resolve(__dirname, templatePath);
@@ -22,8 +22,7 @@ const generateHtml = (templatePath, data) => {
 module.exports = {
 	entry: {
 		main: './src/js/app.js',
-		sobre: './src/js/sobre.js',
-		privacidade: './src/js/privacidade.js',
+		index: './src/js/index.js',
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -48,7 +47,7 @@ module.exports = {
 		// --- PÁGINA INICIAL ---
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
-			chunks: ['main'],
+			chunks: ['main', 'index'],
 			inject: 'body',
 			templateContent: generateHtml('./src/index.ejs', {
 				title: 'Caloric: Calculadora de Calorias, Macros e IMC Precisa',
@@ -81,7 +80,7 @@ module.exports = {
 		// --- PÁGINA SOBRE ---
 		new HtmlWebpackPlugin({
 			filename: 'sobre.html',
-			chunks: ['sobre'],
+			chunks: ['main'],
 			inject: 'body',
 			templateContent: generateHtml('./src/sobre.ejs', {
 				// --- Início das Meta Tags Otimizadas para a página SOBRE ---
@@ -119,7 +118,7 @@ module.exports = {
 		// --- PÁGINA PRIVACIDADE ---
 		new HtmlWebpackPlugin({
 			filename: 'privacidade.html',
-			chunks: ['privacidade'],
+			chunks: ['main'],
 			inject: 'body',
 			templateContent: generateHtml('./src/privacidade.ejs', {
 				title: 'Políticas de Privacidade | Caloric',
@@ -127,6 +126,20 @@ module.exports = {
 					description: 'Entenda nossas políticas de privacidade no app do Caloric.',
 				},
 				canonicalUrl: 'https://caloric.com.br/privacidade.html',
+			}),
+		}),
+		// --- PÁGINA DE BLOG - CALCULATION ---
+		new HtmlWebpackPlugin({
+			filename: '/blog/calculo.html',
+			chunks: ['main'],
+			inject: 'body',
+			templateContent: generateHtml('./src/blog.ejs', {
+				title: 'Caloric Blog - Calculation',
+				article: 'calculation',
+				meta: {
+					description: 'Entenda como o cálculo é realizado em nosso site.',
+				},
+				canonicalUrl: 'https://caloric.com.br/blog/calculation.html',
 			}),
 		}),
 		new MiniCssExtractPlugin(),
