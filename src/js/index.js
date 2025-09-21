@@ -1,5 +1,5 @@
+import '../css/index.css';
 // frontend/src/js/index.js - Lógica ESPECÍFICA DA PÁGINA INICIAL (index.ejs)
-
 // Importa as instâncias globais do app.js
 import { authManager, apiClient, handleLogout } from './app.js';
 // Importa os módulos UI específicos da página inicial

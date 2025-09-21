@@ -1,5 +1,4 @@
-
-header{
+body > header{
 	background-color: var(--cor-fundo-claro);
 	position: sticky;
 	top: 0;

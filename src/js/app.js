@@ -1,7 +1,6 @@
 // src/js/app.js
 import '../css/header.css';
 import '../css/style.css';
-import '../css/index.css';
 
 // Importa os módulos essenciais
 import ApiClient from './api/apiClient';
