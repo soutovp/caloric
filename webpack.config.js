@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const SitemapWebpackPlugin = require('sitemap-webpack-plugin').default;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const paths = ['/', '/sobre.html', '/privacidade.html', '/blog/calculation'];
+const paths = ['/', '/sobre.html', '/privacidade.html', '/blog/calculo.html'];
 
 const generateHtml = (templatePath, data) => {
   const absoluteTemplatePath = path.resolve(__dirname, templatePath);
@@ -130,7 +130,7 @@ module.exports = {
 		}),
 		// --- PÁGINA DE BLOG - CALCULATION ---
 		new HtmlWebpackPlugin({
-			filename: '/blog/calculo.html',
+			filename: 'calculo.html',
 			chunks: ['main'],
 			inject: 'body',
 			templateContent: generateHtml('./src/blog.ejs', {
